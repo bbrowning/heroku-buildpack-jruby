@@ -77,7 +77,7 @@ function bundle_install {
   echo "-----> Installing dependencies with Bundler"
 
   cd $BUILD_DIR
-  jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test --binstubs --deployment | indent
+  jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test --binstubs --deployment --standalone | indent
 
   echo "Dependencies installed" | indent
 }
@@ -89,26 +89,6 @@ function bundle_install_with_cache {
   get_bundle_cache
   bundle_install
   store_bundle_cache
-}
-
-function install_rails_log_stdout {
-  if [ -f $BUILD_DIR/config/environment.rb ]; then
-    PLUG_DIR=$BUILD_DIR/vendor/plugins/rails_log_stdout
-    mkdir -p $PLUG_DIR
-    cd $PLUG_DIR
-    curl https://github.com/ddollar/rails_log_stdout/tarball/master -s -o - | tar xzf - 
-    cd -
-  fi
-}
-
-function install_rails3_server_static_assets {
-  if [ -f $BUILD_DIR/config/application.rb ]; then
-    PLUG_DIR=$BUILD_DIR/vendor/plugins/rails3_server_static_assets
-    mkdir -p $PLUG_DIR
-    cd $PLUG_DIR
-    curl 'https://github.com/pedro/rails3_serve_static_assets/tarball/master' -s -o - | tar xzf - 
-    cd -
-  fi
 }
 
 function create_database_yml {
@@ -173,7 +153,7 @@ function precompile_assets {
 }
 
 JRUBY_OPTS="--1.9 -J-Xmx400m"
-VERSION="1.7.0.preview1"
+VERSION="1.7.0.preview2"
 
 download_jruby_and_install_default_gems
 copy_jruby_to_build
@@ -181,9 +161,6 @@ bundle_install_with_cache
 
 create_database_yml
 precompile_assets
-
-# install_rails_log_stdout
-# install_rails3_server_static_assets
 
 logger -p user.notice -t "slugc[$$]" "language_pack_jruby jruby_compile_end $LOGGER_FLAGS"
 
