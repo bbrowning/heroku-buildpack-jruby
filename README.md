@@ -8,11 +8,11 @@ It will download and unpack JRuby from [jruby.org](http://jruby.org/), install [
 
 Example ```Procfile```:
 
-    web: bin/trinidad -t -r -p $PORT -e $RACK_ENV
+    web: bin/torquebox-lite -b 0.0.0.0 -p $PORT
 
 Note: You do normally not want to use ```bundle exec``` with JRuby. Use the binstubs (in ```bin/```) instead, and put ```require 'bundler/setup'``` before any other ```require```.
 
-Current JRuby version: 1.7.0preview1
+Current JRuby version: 1.7.0preview2
 
 For now only supports 1.9 mode, open an issue if you need 1.8 mode.
 
@@ -40,6 +40,7 @@ config.logger = Logger.new(STDOUT)
 
 Recommended web servers are:
 
+* [TorqueBox Lite](https://github.com/torquebox/torquebox-lite) - A lightweight, web-only version of [TorqueBox](http://torquebox.org)
 * [Trinidad](https://github.com/trinidad/trinidad) - A wrapper around [Tomcat](http://tomcat.apache.org/)
 * [Mizuno](https://github.com/matadon/mizuno) - A wrapper around [Jetty](http://jetty.codehaus.org/jetty/)
 * [Puma](http://puma.io) - A server written in Ruby, wraps the Ragel parser (from Mongrel)
