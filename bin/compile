@@ -44,7 +44,7 @@ function indent {
 
 function download_jruby_and_install_default_gems {
   if [ ! -d "$CACHE_DIR/jruby-$VERSION" ]; then
-    echo "-----> Downloading and unpacking JRuby"
+    echo "-----> Downloading and unpacking JRuby ${VERSION}"
     mkdir -p $CACHE_DIR
     JRUBY_TAR=http://jruby.org.s3.amazonaws.com/downloads/$VERSION/jruby-bin-$VERSION.tar.gz
     curl $JRUBY_TAR -s -o - | tar xzf - -C $CACHE_DIR/
@@ -56,7 +56,7 @@ function download_jruby_and_install_default_gems {
 }
 
 function copy_jruby_to_build {
-  echo "-----> Vendoring JRuby into slug"
+  echo "-----> Vendoring JRuby ${VERSION} into slug"
   cp -ru $CACHE_DIR/jruby-$VERSION $BUILD_DIR/jruby
   PATH=$BUILD_DIR/jruby/bin:$PATH
 }
