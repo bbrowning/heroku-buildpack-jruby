@@ -77,7 +77,7 @@ function bundle_install {
   echo "-----> Installing dependencies with Bundler"
 
   cd $BUILD_DIR
-  jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test --binstubs --deployment | indent
+  jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test | indent
 
   echo "Dependencies installed" | indent
 }
