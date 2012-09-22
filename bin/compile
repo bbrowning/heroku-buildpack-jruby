@@ -78,6 +78,7 @@ function bundle_install {
 
   cd $BUILD_DIR
   jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test --binstubs --deployment | indent
+  jruby $JRUBY_OPTS -r openssl -S bundle clean
 
   echo "Dependencies installed" | indent
 }
@@ -89,6 +90,9 @@ function bundle_install_with_cache {
   get_bundle_cache
   bundle_install
   store_bundle_cache
+
+  # Keep cached gems out of the slug
+  rm -r $BUNDLE_DIR/jruby/1.9/cache
 }
 
 function create_database_yml {
